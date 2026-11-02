@@ -4,6 +4,7 @@ import * as React from "react";
 import { Gem, Hammer, PenLine, Sparkles } from "lucide-react";
 import { MarbleDefs, MoortiArt } from "@/components/ui/moorti-art";
 import { SectionHeading } from "@/components/site/section-heading";
+import { isCutout } from "@/lib/content";
 
 const STEPS = [
   { icon: Gem, title: "Choosing the stone", hi: "पत्थर का चयन", text: "Every block is checked for colour, veining and hidden cracks before a single line is drawn on it." },
@@ -16,7 +17,7 @@ function clamp(v: number) {
   return Math.max(0, Math.min(1, v));
 }
 
-export function Craft() {
+export function Craft({ image }: { image?: string }) {
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const visualRef = React.useRef<HTMLDivElement | null>(null);
   const [progress, setProgress] = React.useState(0);
@@ -51,22 +52,23 @@ export function Craft() {
   const current = STEPS[stepIndex]!;
 
   return (
-    <section id="craft" ref={sectionRef} className="relative scroll-mt-20 bg-[#EFE7DB] py-24 sm:py-32">
+    <section id="craft" ref={sectionRef} className="relative scroll-mt-20 bg-[#F1EBE2] py-24 sm:py-32">
       <MarbleDefs uid="craft" />
-      <div aria-hidden="true" className="absolute inset-0 opacity-40 marble-texture" />
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
         <div className="lg:sticky lg:top-24 lg:h-[calc(100svh-8rem)] lg:self-start">
           <div className="flex h-full flex-col justify-center gap-10">
             <div className="lg:hidden">
               <SectionHeading eyebrow="The craft" title={<>From stone <em className="font-normal text-gold-gradient">to soul.</em></>} hindi="पत्थर से प्राण तक" align="left" />
             </div>
-            <div ref={visualRef} className="relative mx-auto aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-gold/25 bg-gradient-to-b from-[#2A241E] to-[#171310] shadow-[0_40px_80px_-40px_rgba(23,19,16,0.6)]">
+            <div ref={visualRef} className="relative mx-auto aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#26201B] to-[#161210] shadow-[0_40px_80px_-40px_rgba(23,19,16,0.6)]">
               <div aria-hidden="true" className="absolute inset-0" style={{ background: `radial-gradient(55% 40% at 50% 42%, rgba(255,214,150,${0.15 + carve * 0.35}), transparent 72%)` }} />
-              <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[12%] marble-face opacity-90" />
-              <div className="absolute inset-x-[14%] bottom-[9%] top-[19%]">
+              <div className={`absolute ${image && !isCutout(image) ? "inset-0" : "inset-x-[14%] bottom-[9%] top-[19%]"}`}>
                 {/* the finished moorti, revealed from the top */}
                 <div className="absolute inset-0" style={{ clipPath: `inset(0 0 ${((1 - carve) * 100).toFixed(2)}% 0)` }}>
-                  <MoortiArt uid="craft" kind="ganesha" tone="white" accent={progress > 0.78 ? "#C8502E" : undefined} />
+                  {image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    ? <img src={image} alt="" className={`absolute inset-0 size-full ${isCutout(image) ? "object-contain object-bottom" : "object-cover"}`} />
+                    : <MoortiArt uid="craft" kind="ganesha" tone="white" accent={progress > 0.78 ? "#C8502E" : undefined} />}
                 </div>
                 {/* the raw block, chipped away */}
                 <div aria-hidden="true" className="absolute inset-x-[4%] bottom-[1%] top-[6%] rounded-[6px] marble-face shadow-[inset_0_0_30px_rgba(0,0,0,0.12)]" style={{ clipPath: `inset(${(carve * 100).toFixed(2)}% 0 0 0)` }}>

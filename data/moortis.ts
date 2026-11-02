@@ -129,6 +129,8 @@ export interface Category {
   kind: MoortiKind;
   tone: MarbleTone;
   accent?: string;
+  /** Photo for the card (transparent cut-out works best). */
+  image?: string;
 }
 
 export const CATEGORIES: Category[] = [

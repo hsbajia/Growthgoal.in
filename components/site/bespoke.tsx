@@ -4,7 +4,7 @@ import * as React from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
-import { SITE, whatsappLink } from "@/data/site";
+import { whatsappLink, type SiteInfo } from "@/lib/content";
 
 const DEITIES = ["Ganesha", "Radha Krishna", "Lakshmi", "Shivling / Shiv Parivar", "Hanuman", "Buddha", "Durga Maa", "Sai Baba", "Home Mandir", "Something else"];
 const SIZES = ['Up to 6"', '6" – 12"', '12" – 18"', '18" – 24"', '24" – 36"', 'Above 36"', "Not sure yet"];
@@ -12,7 +12,7 @@ const MARBLES = ["White", "Ivory", "Black", "Green", "Pink", "Not sure"];
 
 const field = "h-12 w-full rounded-xl border border-border bg-background/70 px-4 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-gold focus:ring-2 focus:ring-gold/25";
 
-export function Bespoke() {
+export function Bespoke({ site }: { site: SiteInfo }) {
   const [marble, setMarble] = React.useState("White");
   const [sent, setSent] = React.useState(false);
 
@@ -20,7 +20,7 @@ export function Bespoke() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const lines = [
-      `Namaste ${SITE.name}, I would like a custom moorti.`,
+      `Namaste ${site.name}, I would like a custom moorti.`,
       `Name: ${data.get("name") || "-"}`,
       `Phone: ${data.get("phone") || "-"}`,
       `Moorti: ${data.get("deity") || "-"}`,
@@ -28,7 +28,7 @@ export function Bespoke() {
       `Marble: ${marble}`,
       data.get("note") ? `Note: ${data.get("note")}` : "",
     ].filter(Boolean);
-    window.open(whatsappLink(lines.join("\n")), "_blank", "noopener,noreferrer");
+    window.open(whatsappLink(site.whatsapp, lines.join("\n")), "_blank", "noopener,noreferrer");
     setSent(true);
   };
 

@@ -1,7 +1,9 @@
+import type { SiteInfo } from "@/lib/content";
+
 /**
  * Brand + contact details. Replace the placeholder values with the client's real details.
  */
-export const SITE = {
+export const SITE: SiteInfo = {
   name: "Mriddul Handicraft",
   short: "Mriddul",
   tagline: "Hand-carved marble moortis",
@@ -16,8 +18,3 @@ export const SITE = {
   hours: "Mon – Sat · 10:00 am – 7:00 pm",
   instagram: "#",
 };
-
-export function whatsappLink(message: string) {
-  const text = encodeURIComponent(message);
-  return SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}?text=${text}` : `https://wa.me/?text=${text}`;
-}

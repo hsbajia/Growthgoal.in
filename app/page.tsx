@@ -8,22 +8,26 @@ import { Assurance } from "@/components/site/promise";
 import { Signature } from "@/components/site/signature";
 import { SiteHeader } from "@/components/site/site-header";
 import { Visit } from "@/components/site/visit";
+import { getContent } from "@/lib/store";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const { site, moortis, categories } = await getContent();
   return (
     <>
-      <SiteHeader />
+      <SiteHeader site={site} />
       <main>
-        <Hero />
+        <Hero items={moortis} site={site} />
         <Marquee />
-        <Collections />
-        <Craft />
-        <Signature />
+        <Collections categories={categories} site={site} />
+        <Craft image={site.craftImage} />
+        <Signature site={site} />
         <Assurance />
-        <Bespoke />
-        <Visit />
+        <Bespoke site={site} />
+        <Visit site={site} />
       </main>
-      <MobileCta />
+      <MobileCta site={site} />
     </>
   );
 }

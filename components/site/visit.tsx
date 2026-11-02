@@ -2,7 +2,7 @@ import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/site/logo";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { SITE, whatsappLink } from "@/data/site";
+import { telLink, whatsappLink, type SiteInfo } from "@/lib/content";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -14,12 +14,12 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-export function Visit() {
+export function Visit({ site }: { site: SiteInfo }) {
   const items = [
-    { icon: MapPin, label: "Workshop", value: SITE.address },
-    { icon: Clock, label: "Open", value: SITE.hours },
-    { icon: Phone, label: "Call", value: SITE.phone, href: `tel:${SITE.phone.replace(/[^+\d]/g, "")}` },
-    { icon: Mail, label: "Email", value: SITE.email, href: `mailto:${SITE.email}` },
+    { icon: MapPin, label: "Workshop", value: site.address },
+    { icon: Clock, label: "Open", value: site.hours },
+    { icon: Phone, label: "Call", value: site.phone, href: telLink(site.phone) },
+    { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
   ];
   return (
     <section id="visit" className="relative scroll-mt-20 overflow-hidden bg-stone pt-24 text-ivory sm:pt-32">
@@ -52,23 +52,23 @@ export function Visit() {
             <p className="font-display text-3xl font-medium leading-tight sm:text-4xl">Have a moorti in mind?</p>
             <p className="mt-1 text-ivory/60">Send a photo on WhatsApp — we’ll tell you what’s possible.</p>
           </div>
-          <a href={whatsappLink(`Namaste ${SITE.name}, I have a moorti in mind. Sharing a photo.`)} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-ivory px-7 py-3.5 text-sm font-medium text-stone outline-none transition-transform hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-gold-soft">
+          <a href={whatsappLink(site.whatsapp, `Namaste ${site.name}, I have a moorti in mind. Sharing a photo.`)} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-ivory px-7 py-3.5 text-sm font-medium text-stone outline-none transition-transform hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-gold-soft">
             Chat on WhatsApp <ArrowUpRight className="size-4" aria-hidden="true" />
           </a>
         </Reveal>
 
         <footer className="mt-20 flex flex-col gap-8 border-t border-ivory/10 py-10 pb-[calc(env(safe-area-inset-bottom)+96px)] sm:pb-10 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-3">
-            <Logo tone="light" />
-            <p className="max-w-xs text-sm text-ivory/50">{SITE.description}</p>
+            <Logo name={site.short} tone="light" />
+            <p className="max-w-xs text-sm text-ivory/50">{site.description}</p>
           </div>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ivory/70">
             <a href="#collection" className="hover:text-ivory">Collection</a>
             <a href="#craft" className="hover:text-ivory">The Craft</a>
             <a href="#bespoke" className="hover:text-ivory">Custom Orders</a>
-            <a href={SITE.instagram} className="inline-flex items-center gap-1.5 hover:text-ivory"><InstagramIcon className="size-4" /> Instagram</a>
+            <a href={site.instagram} className="inline-flex items-center gap-1.5 hover:text-ivory"><InstagramIcon className="size-4" /> Instagram</a>
           </nav>
-          <p className="text-xs text-ivory/40">© {new Date().getFullYear()} {SITE.name}</p>
+          <p className="text-xs text-ivory/40">© {new Date().getFullYear()} {site.name}</p>
         </footer>
       </div>
     </section>

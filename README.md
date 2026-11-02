@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mriddul Handicraft — website
 
-## Getting Started
+Next.js + Tailwind + shadcn. Home page: `app/page.tsx`. Admin panel: `/admin`.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Site: http://localhost:3000 · Admin: http://localhost:3000/admin (local password: `admin123`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin panel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+From `/admin` you can change hero moortis (photos, names, sizes, prices, order), collection cards,
+contact details (WhatsApp, phone, address…) and section photos. Press **Save changes** to publish.
 
-## Learn More
+Photos: background-removed PNGs work best — they are auto-trimmed and placed on the shelf.
+Normal photos also work (they show as full photos in the collection cards).
 
-To learn more about Next.js, take a look at the following resources:
+### Settings needed when you put the site online
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Setting | What it does |
+| --- | --- |
+| `ADMIN_PASSWORD` | Password for `/admin`. **Required** — without it the admin login is off. |
+| `ADMIN_SECRET` | Optional. Any long random text; signs the login cookie. |
+| `BLOB_READ_WRITE_TOKEN` | Needed on **Vercel**: create a Blob store (Project → Storage → Blob → Connect). Vercel adds this automatically. |
+| `CONTENT_DIR` | Optional, normal servers only: folder where changes and uploaded photos are kept (default `.content/`). |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+On a normal Node server (VPS), changes are saved in `.content/` — back up that folder.

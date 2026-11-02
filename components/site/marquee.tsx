@@ -14,7 +14,7 @@ export function Marquee() {
     </ul>
   );
   return (
-    <div className="relative overflow-hidden border-y border-gold/20 py-5 marble-dark">
+    <div className="relative overflow-hidden bg-stone py-5">
       <div className="flex w-max animate-marquee">
         {row(false)}
         {row(true)}
